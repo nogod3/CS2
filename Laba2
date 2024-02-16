@@ -1,1 +1,277 @@
+using System;
+using System.Collections.Generic;
 
+namespace work2
+{
+    public class Document
+    {
+        public string Name { get; set; }
+        public string Author { get; set; }
+        public List<string> Keywords { get; set; }
+        public string Topic { get; set; }
+        public string FilePath { get; set; }
+
+        public virtual void GetDocumentInfo()
+        {
+            Console.WriteLine($"Имя: {Name}");
+            Console.WriteLine($"Автор: {Author}");
+            Console.WriteLine($"Ключевые слова: {string.Join(", ", Keywords)}");
+            Console.WriteLine($"Тематика: {Topic}");
+            Console.WriteLine($"Путь к файлу: {FilePath}");
+        }
+    }
+
+    public class MSWordDocument : Document
+    {
+        public int PageCount { get; set; }
+
+        public override void GetDocumentInfo()
+        {
+            base.GetDocumentInfo();
+            Console.WriteLine($"Количество страниц: {PageCount}");
+        }
+    }
+
+    public class PDFDocument : Document
+    {
+        public bool IsProtected { get; set; }
+
+        public override void GetDocumentInfo()
+        {
+            base.GetDocumentInfo();
+            Console.WriteLine($"Защищено: {IsProtected}");
+        }
+    }
+
+    public class MSExcelDocument : Document
+    {
+        public string WorksheetName { get; set; }
+
+        public override void GetDocumentInfo()
+        {
+            base.GetDocumentInfo();
+            Console.WriteLine($"Имя рабочего листа: {WorksheetName}");
+        }
+    }
+
+    public class TXTDocument : Document
+    {
+        public int WordCount { get; set; }
+
+        public override void GetDocumentInfo()
+        {
+            base.GetDocumentInfo();
+            Console.WriteLine($"Количество слов: {WordCount}");
+        }
+    }
+
+    public class HTMLDocument : Document
+    {
+        public string Title { get; set; }
+
+        public override void GetDocumentInfo()
+        {
+            base.GetDocumentInfo();
+            Console.WriteLine($"Название: {Title}");
+        }
+    }
+
+    public class Menu
+    {
+        private static Menu instance;
+
+        private Menu()
+        {
+        }
+
+        public static Menu Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new Menu();
+                }
+                return instance;
+            }
+        }
+
+        public void ShowMenu()
+        {
+            while (true)
+            {
+                Console.WriteLine("1. MS Word Document");
+                Console.WriteLine("2. PDF Document");
+                Console.WriteLine("3. MS Excel Document");
+                Console.WriteLine("4. TXT Document");
+                Console.WriteLine("5. HTML Document");
+                Console.WriteLine("0. Exit");
+                Console.WriteLine("Выберете вариант: ");
+
+                string option = Console.ReadLine();
+
+                switch (option)
+                {
+                    case "1":
+                        CreateAndDisplayMSWordDocument();
+                        break;
+                    case "2":
+                        CreateAndDisplayPDFDocument();
+                        break;
+                    case "3":
+                        CreateAndDisplayMSExcelDocument();
+                        break;
+                    case "4":
+                        CreateAndDisplayTXTDocument();
+                        break;
+                    case "5":
+                        CreateAndDisplayHTMLDocument();
+                        break;
+                    case "0":
+                        return;
+                    default:
+                        Console.WriteLine("Неверный параметр. Повторите попытку");
+                        break;
+                }
+            }
+        }
+
+        private void CreateAndDisplayMSWordDocument()
+        {
+            MSWordDocument doc = new MSWordDocument();
+
+            Console.WriteLine("Введите имя документа: ");
+            doc.Name = Console.ReadLine();
+
+            Console.WriteLine("Введите автора документа: ");
+            doc.Author = Console.ReadLine();
+
+            Console.WriteLine("Введие ключевые слова(через запятую): ");
+            string keywordInput = Console.ReadLine();
+            doc.Keywords = new List<string>(keywordInput.Split(','));
+
+            Console.WriteLine("Введите тематику документа: ");
+            doc.Topic = Console.ReadLine();
+
+            Console.WriteLine("Введите путь к файлу: ");
+            doc.FilePath = Console.ReadLine();
+
+            Console.WriteLine("Введите количество страниц: ");
+            doc.PageCount = int.Parse(Console.ReadLine());
+
+            doc.GetDocumentInfo();
+        }
+
+        private void CreateAndDisplayPDFDocument()
+        {
+            PDFDocument doc = new PDFDocument();
+
+            Console.WriteLine("Введите имя документа: ");
+            doc.Name = Console.ReadLine();
+
+            Console.WriteLine("Введите автора документа: ");
+            doc.Author = Console.ReadLine();
+
+            Console.WriteLine("Введие ключевые слова(через запятую): ");
+            string keywordInput = Console.ReadLine();
+            doc.Keywords = new List<string>(keywordInput.Split(','));
+
+            Console.WriteLine("Введите тематику документа: ");
+            doc.Topic = Console.ReadLine();
+
+            Console.WriteLine("Введите путь к файлу: ");
+            doc.FilePath = Console.ReadLine();
+
+            Console.WriteLine("Защищён ли документ? (true/false): ");
+            doc.IsProtected = bool.Parse(Console.ReadLine());
+
+            doc.GetDocumentInfo();
+        }
+
+        private void CreateAndDisplayMSExcelDocument()
+        {
+            MSExcelDocument doc = new MSExcelDocument();
+
+            Console.WriteLine("Введите имя документа: ");
+            doc.Name = Console.ReadLine();
+
+            Console.WriteLine("Введите автора документа: ");
+            doc.Author = Console.ReadLine();
+
+            Console.WriteLine("Введие ключевые слова(через запятую): ");
+            string keywordInput = Console.ReadLine();
+            doc.Keywords = new List<string>(keywordInput.Split(','));
+
+            Console.WriteLine("Введите тематику документа: ");
+            doc.Topic = Console.ReadLine();
+
+            Console.WriteLine("Введите путь к файлу: ");
+            doc.FilePath = Console.ReadLine();
+
+            Console.WriteLine("Введите имя листа: ");
+            doc.WorksheetName = Console.ReadLine();
+
+            doc.GetDocumentInfo();
+        }
+
+        private void CreateAndDisplayTXTDocument()
+        {
+            TXTDocument doc = new TXTDocument();
+
+            Console.WriteLine("Введите имя документа: ");
+            doc.Name = Console.ReadLine();
+
+            Console.WriteLine("Введите автора документа: ");
+            doc.Author = Console.ReadLine();
+
+            Console.WriteLine("Введие ключевые слова(через запятую): ");
+            string keywordInput = Console.ReadLine();
+            doc.Keywords = new List<string>(keywordInput.Split(','));
+
+            Console.WriteLine("Введите тематику документа: ");
+            doc.Topic = Console.ReadLine();
+
+            Console.WriteLine("Введите путь к файлу: ");
+            doc.FilePath = Console.ReadLine();
+
+            Console.WriteLine("Введите количество слов: ");
+            doc.WordCount = int.Parse(Console.ReadLine());
+
+            doc.GetDocumentInfo();
+        }
+
+        private void CreateAndDisplayHTMLDocument()
+        {
+            HTMLDocument doc = new HTMLDocument();
+
+            Console.WriteLine("Введите имя документа: ");
+            doc.Name = Console.ReadLine();
+
+            Console.WriteLine("Введите автора документа: ");
+            doc.Author = Console.ReadLine();
+
+            Console.WriteLine("Введие ключевые слова(через запятую): ");
+            string keywordInput = Console.ReadLine();
+            doc.Keywords = new List<string>(keywordInput.Split(','));
+
+            Console.WriteLine("Введите тематику документа: ");
+            doc.Topic = Console.ReadLine();
+
+            Console.WriteLine("Введите путь к файлу: ");
+            doc.FilePath = Console.ReadLine();
+
+            Console.WriteLine("Введите заголовок документа: ");
+            doc.Title = Console.ReadLine();
+
+            doc.GetDocumentInfo();
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Menu.Instance.ShowMenu();
+        }
+    }
+}
